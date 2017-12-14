@@ -1,0 +1,15 @@
+{
+  "name": "pocket-archive",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Xavier Decuyper",
+  "license": "ISC",
+  "dependencies": {
+    "googleapis": "^23.0.0",
+    "puppeteer": "^0.13.0"
+  }
+}

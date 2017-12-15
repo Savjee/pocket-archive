@@ -2,20 +2,21 @@ const fs = require('fs');
 const snapshotter = require('./snapshotter');
 const hashCalc = require('./utilities/hashCalc');
 const GoogleDriveStorage = require('./storage/googleDrive');
+const PocketConnector = require('./storage/pocket');
 const sleep = require('./utilities/sleep');
 require('dotenv').config({ path: '../.env' });
 
 (async () => {
-  const data = fs.readFileSync('../ril_export.html', 'utf8');
-  const regex = /href="(.*?)"/gi;
-
   const googleDrive = new GoogleDriveStorage();
+  const pocketConnector = new PocketConnector();
 
-  while (match = regex.exec(data)) {
+  const urlsFromPocket = await pocketConnector.getItems();
+
+  for (const bookmark of urlsFromPocket) {
     console.log('');
 
     try {
-      const url = match[1];
+      const url = bookmark.resolved_url;
       const shortHash = hashCalc(url, true);
 
       console.log('Fetching', url);

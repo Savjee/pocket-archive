@@ -26,7 +26,7 @@ module.exports = class GoogleDrive {
    * @param {string} fileName Optional, if set, the file will get this name
    * @returns {Promise}
    */
-  async uploadFile(pathToFile, fileName) {
+  uploadFile(pathToFile, fileName) {
     return new Promise((resolve, reject) => {
       drive.files.create(
         {

@@ -14,7 +14,7 @@ module.exports = async function snapshotter(url, outputPath) {
     .digest('hex')
     .substring(0, 10);
 
-  const outputFile = outputPath + '/' + hash + '.pdf';
+  let outputFile = outputPath + '/';
 
   console.log('Fetching ' + url);
 
@@ -23,6 +23,12 @@ module.exports = async function snapshotter(url, outputPath) {
   await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
   await page.emulateMedia('screen');
   await page.setViewport({ width: 1400, height: 100000 });
+
+  let pageTitle = await page.title();
+  pageTitle = pageTitle.replace(/[^a-zA-Z ]/g, '');
+  pageTitle = pageTitle.toLowerCase().replace(/\s/gi, '-').substring(0,30);
+
+  outputFile += hash.substring(0,10) + '-' + pageTitle + '.pdf';
 
   //scroll down to do lazy loading
   await page.evaluate(_ => {
@@ -37,4 +43,6 @@ module.exports = async function snapshotter(url, outputPath) {
   await page.pdf({ path: outputFile, width: 1400 });
   await page.close();
   await browser.close();
+
+  return outputFile;
 }

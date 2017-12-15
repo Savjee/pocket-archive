@@ -7,15 +7,15 @@ const sleep = require('./utilities/sleep');
 require('dotenv').config({ path: '../.env' });
 
 (async () => {
-  const googleDrive = new GoogleDriveStorage();
-  const pocketConnector = new PocketConnector();
+  try {
+    const googleDrive = new GoogleDriveStorage();
+    const pocketConnector = new PocketConnector();
 
-  const urlsFromPocket = await pocketConnector.getItems();
+    const urlsFromPocket = await pocketConnector.getItems();
 
-  for (const bookmark of urlsFromPocket) {
-    console.log('');
+    for (const bookmark of urlsFromPocket) {
+      console.log('');
 
-    try {
       const url = bookmark.resolved_url;
       const shortHash = hashCalc(url, true);
 
@@ -40,9 +40,8 @@ require('dotenv').config({ path: '../.env' });
 
       // Remove it from our filesystem. It's safe with Google!
       fs.unlinkSync(pathToGeneratedPDF);
-
-    } catch (error) {
-      console.log('Error while fetching that page!', error);
     }
+  } catch (error) {
+    console.log('Error while fetching that page!', error);
   }
 })();

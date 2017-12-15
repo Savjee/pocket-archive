@@ -16,8 +16,6 @@ module.exports = async function snapshotter(url, outputPath) {
 
   let outputFile = outputPath + '/';
 
-  console.log('Fetching ' + url);
-
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -36,10 +34,8 @@ module.exports = async function snapshotter(url, outputPath) {
   });
 
   // Wait 10 seconds just to make sure all images are correctly loaded
-  console.log('just waiting 10s');
   await new Promise(resolve => setTimeout(resolve, 10 * 1000));
 
-  console.log('snapshotting pdf');
   await page.pdf({ path: outputFile, width: 1400 });
   await page.close();
   await browser.close();

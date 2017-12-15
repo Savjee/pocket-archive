@@ -19,7 +19,7 @@ require('dotenv').config({ path: '../.env' });
       fs.unlinkSync(filePath);
     } catch (error) {
       console.log('Error while fetching that page!', error);
-      throw error;
+      // throw error;
     }
   }
 })();

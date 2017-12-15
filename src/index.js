@@ -1,7 +1,6 @@
 const fs = require('fs');
 const snapshotter = require('./snapshotter');
 const googleUploader = require('./googleUploader');
-const backblazeUploader = require('./backblazeUploader');
 require('dotenv').config({ path: '../.env' });
 
 

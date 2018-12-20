@@ -11,6 +11,9 @@ provider:
     PAGE_LOAD_TIMEOUT: 45000
     LOGGING: true
 
+  deploymentBucket:
+    name: "xd-serverless-deployments"
+
   # iamRoleStatements:
   #   - Effect: "Allow"
   #     Action:
@@ -45,6 +48,7 @@ functions:
           method: post
 
 resources:
+  Description: "Personal - Archives Pocket bookmarks to PDFs on Google Drive"
   Resources:
     ApiGatewayRestApi:
       Properties:

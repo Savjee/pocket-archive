@@ -2,7 +2,7 @@ service: xd-pocket-archiver
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs10.x
   profile: serverless-personal
   stage: prod
   region: eu-west-1
@@ -27,21 +27,14 @@ provider:
   #     Resource: "arn:aws:sqs:${self:provider.region}:567406759239:*"
 
 plugins:
-  - serverless-plugin-chrome
-  - serverless-webpack
-
-custom:
-  chrome:
-    flags:
-      - --window-size=1280,1696 # Letter size
-      - --hide-scrollbars
+  # - serverless-webpack
 
 functions:
   pdf:
     description: Headless Chrome Serverless-framework PDF example
     memorySize: 1536
     timeout: 120
-    handler: src/handlers/pdf.default
+    handler: src/handlers/pdf.handler
     events:
       - http:
           path: pdf
@@ -54,18 +47,3 @@ resources:
       Properties:
         BinaryMediaTypes:
           - "*/*"
-    # MainQueue:
-    #   Type: "AWS::SQS::Queue"
-    #   Properties:
-    #     QueueName: "xd-pocket-archive-mainqueue"
-    #     VisibilityTimeout: 120
-
-    # Enable X-Ray tracing on Lambda functions
-    # ScreenshotLambdaFunction:
-    #   Properties:
-    #     TracingConfig:
-    #       Mode: Active
-    # PdfLambdaFunction:
-    #   Properties:
-    #     TracingConfig:
-    #       Mode: Active

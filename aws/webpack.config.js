@@ -29,7 +29,7 @@ module.exports = {
     path: `${__dirname}/.webpack`,
     filename: '[name].js',
   },
-  externals: ['aws-sdk'],
+  externals: ['aws-sdk', 'chrome-aws-lambda'],
   plugins: [
     new Dotenv(),
     new webpack.optimize.LimitChunkCountPlugin({
